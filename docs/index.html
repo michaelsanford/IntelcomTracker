@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self' https://img.shields.io; font-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), magnetometer=(), gyroscope=(), accelerometer=(), autoplay=(), fullscreen=(), picture-in-picture=()">
   <title>IntelcomTracker — Terminal Package Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -21,11 +26,12 @@
     <a href="#features">Features</a>
     <a href="#install">Install</a>
     <a href="#keys">Keys</a>
-    <a href="#disclaimer">Disclaimer</a>
     <a href="privacy.html">Privacy</a>
+    <a href="#bugs">Bugs</a>
     <a href="#security">Security</a>
+    <a href="#disclaimer">Disclaimer</a>
     <!-- Replace michaelsanford/IntelcomTracker below -->
-    <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub ↗</a>
+    <a href="https://github.com/michaelsanford/IntelcomTracker" rel="noopener noreferrer">GitHub ↗</a>
   </div>
 </nav>
 
@@ -39,8 +45,8 @@
     </p>
     <div class="btn-group">
       <!-- Replace michaelsanford/IntelcomTracker below -->
-      <a class="btn btn-primary btn-hero" href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">⬇ Download Latest Release</a>
-      <a class="btn btn-secondary"       href="https://github.com/michaelsanford/IntelcomTracker">View on GitHub</a>
+      <a class="btn btn-primary btn-hero" href="https://github.com/michaelsanford/IntelcomTracker/releases/latest" rel="noopener noreferrer">⬇ Download Latest Release</a>
+      <a class="btn btn-secondary" href="https://github.com/michaelsanford/IntelcomTracker" rel="noopener noreferrer">View on GitHub</a>
     </div>
   </div>
 </header>
@@ -162,21 +168,21 @@
   <div class="container">
     <h2>Getting Started</h2>
 
-    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option A — Prebuilt binary <span style="color:var(--muted);font-weight:400;font-size:0.875rem;">(recommended)</span></h3>
-    <ol style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.75rem;font-size:0.95rem;line-height:1.8;">
+    <h3 class="install-heading">Option A — Prebuilt binary <span class="install-badge">(recommended)</span></h3>
+    <ol class="install-steps">
       <!-- Replace michaelsanford/IntelcomTracker below -->
-      <li>Go to the <a href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">latest GitHub Release</a></li>
+      <li>Go to the <a href="https://github.com/michaelsanford/IntelcomTracker/releases/latest" rel="noopener noreferrer">latest GitHub Release</a></li>
       <li>Download the binary for your platform (Windows <code>.exe</code>, Linux, or macOS)</li>
       <li>Run it — on Windows, SmartScreen may warn about an unsigned binary; on macOS, right-click → Open to bypass Gatekeeper</li>
       <li>Press <kbd>A</kbd> to add your first tracking number</li>
     </ol>
 
-    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option B — Build from source</h3>
+    <h3 class="install-heading">Option B — Build from source</h3>
     <pre class="code"><span class="ps">PS&gt; </span><span class="cmd">winget install Microsoft.DotNet.SDK.9</span>
 <span class="ps">PS&gt; </span><span class="cmd">git clone https://github.com/michaelsanford/IntelcomTracker</span>
 <span class="ps">PS&gt; </span><span class="cmd">cd IntelcomTracker</span>
 <span class="ps">PS&gt; </span><span class="cmd">dotnet run</span></pre>
-    <p style="color:var(--muted);font-size:0.875rem;margin-top:0.75rem;">
+    <p class="section-note">
       First run downloads NuGet packages then launches the dashboard.
     </p>
   </div>
@@ -205,10 +211,10 @@
 <section id="privacy">
   <div class="container">
     <h2>Privacy</h2>
-    <p style="color:var(--muted);margin-bottom:1rem;">IntelcomTracker collects no data. Everything stays on your computer.</p>
-    <ul style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.5rem;font-size:0.95rem;line-height:1.8;">
+    <p class="section-intro">IntelcomTracker collects no data. Everything stays on your computer.</p>
+    <ul class="privacy-list">
       <li>Tracking numbers and cached API responses are stored locally:
-        <ul style="margin-top:0.25rem;">
+        <ul>
           <li><strong>Windows:</strong> <code>%LOCALAPPDATA%\IntelcomTracker\tracking.json</code></li>
           <li><strong>Linux:</strong> <code>~/.local/share/IntelcomTracker/tracking.json</code></li>
           <li><strong>macOS:</strong> <code>~/Library/Application Support/IntelcomTracker/tracking.json</code></li>
@@ -225,9 +231,9 @@
 <section id="bugs">
   <div class="container">
     <h2>Bug Reports</h2>
-    <p style="color:var(--muted);margin-bottom:1rem;">
+    <p class="section-intro">
       Found a bug? Please
-      <a href="https://github.com/michaelsanford/IntelcomTracker/issues/new?template=bug_report.yml">open an issue on GitHub</a>.
+      <a href="https://github.com/michaelsanford/IntelcomTracker/issues/new?template=bug_report.yml" rel="noopener noreferrer">open an issue on GitHub</a>.
     </p>
   </div>
 </section>
@@ -236,9 +242,9 @@
 <section id="security">
   <div class="container">
     <h2>Security</h2>
-    <p style="color:var(--muted);margin-bottom:1rem;">
+    <p class="section-intro">
       To report a security vulnerability, please use
-      <a href="https://github.com/michaelsanford/IntelcomTracker/security/advisories/new">GitHub Security Advisories</a>.
+      <a href="https://github.com/michaelsanford/IntelcomTracker/security/advisories/new" rel="noopener noreferrer">GitHub Security Advisories</a>.
       Do not open a public issue for security reports.
     </p>
   </div>
@@ -262,7 +268,7 @@
         with that company, and they bear no responsibility for it. Use at your own risk.
       </p>
     </div>
-    <p style="color:var(--muted);font-size:0.875rem;">
+    <p class="section-note-sm">
       This tool queries the same public HTTPS endpoint your browser uses when you visit
       Intelcom's tracking page. See the <a href="privacy.html">Privacy Policy</a> for
       details on what data is and isn't transmitted.
@@ -279,8 +285,8 @@
     </div>
     <div class="footer-links">
       <!-- Replace michaelsanford/IntelcomTracker below -->
-      <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub</a>
-      <a href="https://github.com/michaelsanford/IntelcomTracker/releases">Releases</a>
+      <a href="https://github.com/michaelsanford/IntelcomTracker" rel="noopener noreferrer">GitHub</a>
+      <a href="https://github.com/michaelsanford/IntelcomTracker/releases" rel="noopener noreferrer">Releases</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="#disclaimer">Disclaimer</a>
     </div>

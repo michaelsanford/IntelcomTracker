@@ -100,7 +100,7 @@ header {
 .btn-hero { padding: 0.85rem 2.5rem; font-size: 1.05rem; border-radius: 8px; }
 
 /* ── Sections ── */
-section { padding: 4rem 1.5rem; border-bottom: 1px solid var(--border); }
+section { padding: 4rem 1.5rem; }
 section h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
 
 /* ── Screenshots ── */
@@ -296,3 +296,17 @@ footer {
 .footer-links { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
 .footer-links a { color: var(--muted); font-size: 0.85rem; }
 .footer-links a:hover { color: var(--text); }
+
+
+/* ── Utility classes (replacing inline styles for strict CSP) ── */
+.section-intro { color: var(--muted); margin-bottom: 1rem; }
+.section-note { color: var(--muted); font-size: 0.875rem; margin-top: 0.75rem; }
+.section-note-sm { color: var(--muted); font-size: 0.875rem; }
+.install-heading { font-size: 1rem; margin-bottom: 0.75rem; }
+.install-badge { color: var(--muted); font-weight: 400; font-size: 0.875rem; }
+.install-steps { color: var(--muted); margin-left: 1.5rem; margin-bottom: 1.75rem; font-size: 0.95rem; line-height: 1.8; }
+.privacy-list { color: var(--muted); margin-left: 1.5rem; margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.8; }
+.privacy-list ul { margin-top: 0.25rem; }
+.prose-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.callout-spaced { margin-top: 2.5rem; }
+.mt-md { margin-top: 1.5rem; }
