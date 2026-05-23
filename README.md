@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml)
 [![Release](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml)
+[![CodeQL](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/github-code-scanning/codeql)
 [![GitHub Release](https://img.shields.io/github/v/release/michaelsanford/IntelcomTracker)](https://github.com/michaelsanford/IntelcomTracker/releases/latest)
 
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
