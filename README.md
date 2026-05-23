@@ -20,6 +20,10 @@ This app collects no data. All tracking numbers and cached responses are stored 
 
 See [PRIVACY.md](PRIVACY.md) for full details.
 
+## Security
+
+To report a security vulnerability, please use [GitHub Security Advisories](https://github.com/michaelsanford/IntelcomTracker/security/advisories/new). Do not open a public issue for security reports.
+
 ### Package list
 
 ```text
