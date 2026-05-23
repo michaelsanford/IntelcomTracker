@@ -1,0 +1,298 @@
+:root {
+  --bg:       #0d1117;
+  --surface:  #161b22;
+  --surface2: #1c2128;
+  --border:   #30363d;
+  --text:     #c9d1d9;
+  --muted:    #8b949e;
+  --accent:   #58a6ff;
+  --green:    #3fb950;
+  --cyan:     #39c5cf;
+  --blue:     #58a6ff;
+  --red:      #f85149;
+  --dim:      #484f58;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+a { color: var(--blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.container { max-width: 980px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ── Disclaimer banner ── */
+.disclaimer-banner {
+  background: #0d1b2e;
+  border-bottom: 2px solid var(--accent);
+  padding: 0.7rem 1.5rem;
+  text-align: center;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+.disclaimer-banner strong { font-weight: 700; }
+.disclaimer-banner a { color: var(--accent); text-decoration: underline; }
+
+/* ── Nav ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 1.5rem;
+}
+.nav-brand {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 1rem;
+}
+.nav-links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+.nav-links a { color: var(--muted); }
+.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+/* ── Header ── */
+header {
+  padding: 5rem 1.5rem 4rem;
+  text-align: center;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+.tagline {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 540px;
+  margin: 0 auto 2rem;
+}
+.btn-group { display: flex; flex-direction: column; gap: 0.75rem; align-items: center; }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.3rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.82; text-decoration: none; }
+.btn-primary  { background: var(--accent); color: #fff; }
+.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.btn-hero { padding: 0.85rem 2.5rem; font-size: 1.05rem; border-radius: 8px; }
+
+/* ── Sections ── */
+section { padding: 4rem 1.5rem; border-bottom: 1px solid var(--border); }
+section h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+
+/* ── Screenshots ── */
+.screenshots { display: flex; flex-direction: column; gap: 2rem; }
+.screenshot-label {
+  font-size: 0.72rem;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Terminal window ── */
+.terminal-window {
+  background: #010409;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  max-width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+}
+.term-bar {
+  background: #1a1f27;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  user-select: none;
+}
+.term-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.5rem 1.25rem;
+  background: #010409;
+  color: var(--text);
+  font-size: 0.78rem;
+  border-right: 1px solid var(--border);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.term-tab-ps {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.65rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.term-controls {
+  display: flex;
+  align-items: stretch;
+}
+.term-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  cursor: default;
+}
+.term-ctrl-close:hover { background: #c42b1c; color: #fff; }
+.term-body { padding: 1.25rem 1rem; overflow-x: hidden; }
+
+pre.term {
+  font-family: 'Cascadia Code', 'Consolas', 'Courier New', monospace;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--text);
+  white-space: pre;
+  tab-size: 4;
+}
+
+/* Terminal colour classes — mirror Spectre.Console colours */
+.ty   { color: #e3b341; }           /* yellow  — Loaded / out for delivery */
+.tg   { color: #3fb950; }           /* green   — Delivered                 */
+.tc   { color: #39c5cf; }           /* cyan1   — At station                */
+.tb   { color: #58a6ff; }           /* blue    — Received at facility       */
+.tr   { color: #f85149; }           /* red     — Issue                     */
+.tdim { color: #484f58; }           /* grey    — Info received / dim text  */
+.tbold { font-weight: 700; }
+.tkey  { color: var(--dim); }
+
+/* ── Features grid ── */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.25rem;
+}
+.feature {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+}
+.feature-icon { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.feature h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.35rem; }
+.feature p  { font-size: 0.875rem; color: var(--muted); }
+
+/* ── Code ── */
+code {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  background: var(--surface);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  color: #79c0ff;
+}
+pre.code {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.875rem;
+  color: var(--text);
+  margin: 0.75rem 0;
+}
+pre.code .ps  { color: var(--green); user-select: none; }
+pre.code .cmd { color: var(--text); }
+
+/* ── Key bindings table ── */
+.keybindings { width: 100%; border-collapse: collapse; }
+.keybindings th {
+  text-align: left;
+  padding: 0.55rem 1rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.keybindings td { padding: 0.55rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.keybindings tr:last-child td { border-bottom: none; }
+kbd {
+  font-family: 'Cascadia Code', 'Consolas', monospace;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.5em;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+/* ── Callout / disclaimer box ── */
+.callout {
+  background: #0d1b2e;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+.callout h3 { color: var(--accent); font-size: 1rem; margin-bottom: 0.5rem; }
+.callout p  { color: #7fa8d0; font-size: 0.9rem; line-height: 1.6; }
+.callout p + p { margin-top: 0.6rem; }
+.callout strong { color: var(--accent); }
+
+/* ── Prose (privacy page) ── */
+.prose { max-width: 720px; }
+.prose h2 {
+  font-size: 1.25rem;
+  color: var(--accent);
+  margin: 2.5rem 0 0.75rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.prose p, .prose li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+.prose ul { margin: 0.4rem 0 1rem 1.5rem; }
+.prose li { margin-bottom: 0.3rem; }
+.prose pre.code { margin: 1rem 0; }
+.prose .meta { color: var(--dim); font-size: 0.875rem; margin-bottom: 2rem; }
+.prose strong { color: var(--text); }
+
+/* ── Footer ── */
+footer {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+.footer-disclaimer {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  max-width: 640px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.footer-disclaimer strong { color: var(--text); }
+.footer-links { display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); font-size: 0.85rem; }
+.footer-links a:hover { color: var(--text); }

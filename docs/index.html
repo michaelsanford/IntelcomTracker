@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IntelcomTracker — Terminal Package Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ─── Disclaimer banner ─────────────────────────────────────────────────── -->
+<div class="disclaimer-banner">
+  <strong>⚠ Independent project — not affiliated with Intelcom Courrier Canada Inc. in any way.</strong>
+  <a href="#disclaimer">Learn more ↓</a>
+</div>
+
+<!-- ─── Nav ──────────────────────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-brand" href="index.html">IntelcomTracker</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#install">Install</a>
+    <a href="#keys">Keys</a>
+    <a href="#disclaimer">Disclaimer</a>
+    <a href="privacy.html">Privacy</a>
+    <!-- Replace michaelsanford/IntelcomTracker below -->
+    <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub ↗</a>
+  </div>
+</nav>
+
+<!-- ─── Header ───────────────────────────────────────────────────────────── -->
+<header>
+  <div class="container">
+    <div class="logo">IntelcomTracker</div>
+    <p class="tagline">
+      Terminal dashboard for tracking Intelcom courier packages on Windows —
+      color-coded status, persistent tracking numbers, and hourly auto-refresh.
+    </p>
+    <div class="btn-group">
+      <!-- Replace michaelsanford/IntelcomTracker below -->
+      <a class="btn btn-primary btn-hero" href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">⬇ Download .exe</a>
+      <a class="btn btn-secondary"       href="https://github.com/michaelsanford/IntelcomTracker">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<!-- ─── Terminal demo ─────────────────────────────────────────────────────── -->
+<section id="demo">
+  <div class="container">
+    <div class="screenshots">
+
+      <div>
+        <div class="screenshot-label">Package list</div>
+        <div class="terminal-window">
+          <div class="term-bar">
+            <div class="term-tab">
+              <span class="term-tab-ps">PS</span>
+              <span>IntelcomTracker</span>
+            </div>
+            <div class="term-controls">
+              <span class="term-ctrl">&#x2212;</span>
+              <span class="term-ctrl">&#x2610;</span>
+              <span class="term-ctrl term-ctrl-close">&#x2715;</span>
+            </div>
+          </div>
+          <div class="term-body">
+<pre class="term">╭──────┬─────────────────────┬──────────┬──────────────────────────┬─────────────────┬─────────────────────┬─────────╮
+│   #  │ Tracking ID         │ Nickname │ Status                   │ Location        │ ETA Window          │ Updated │
+├──────┼─────────────────────┼──────────┼──────────────────────────┼─────────────────┼─────────────────────┼─────────┤
+│   1  │ INTLCMI000000001    │ —        │ <span class="tdim">Data received</span>            │ —               │ —                   │ 1d ago  │
+│   2  │ INTLCMI000000002    │ Best Buy │ <span class="tb">Received</span>                 │ Candiac, QC     │ —                   │ 4h ago  │
+│   3  │ INTLCMI000000003    │ IKEA     │ <span class="tc">At station</span>               │ Montréal, QC    │ —                   │ 3m ago  │
+│ <span class="ty tbold">&gt;</span> 4  │ INTLCMI000000004    │ Amazon   │ <span class="ty">Loaded</span>                   │ Brossard, QC    │ 1:28 PM – 2:28 PM   │ 5s ago  │
+│   5  │ INTLCMI000000005    │ Costco   │ <span class="tg">Delivered - No Signature</span> │ Laval, QC       │ —                   │ 2h ago  │
+│   6  │ INTLCMI000000006    │ Wayfair  │ <span class="tr">Delivery failed</span>          │ —               │ —                   │ 2d ago  │
+╰──────┴─────────────────────┴──────────┴──────────────────────────┴─────────────────┴─────────────────────┴─────────╯
+<span class="tkey">[A]</span> Add  <span class="tkey">[D]</span> Delete  <span class="tkey">[R]</span> Refresh  <span class="tkey">[↑↓]</span> Navigate  <span class="tkey">[Enter]</span> Details  <span class="tkey">[Q]</span> Quit   <span class="tdim">auto-refresh in 58m 30s</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="screenshot-label">Detail view</div>
+        <div class="terminal-window">
+          <div class="term-bar">
+            <div class="term-tab">
+              <span class="term-tab-ps">PS</span>
+              <span>IntelcomTracker</span>
+            </div>
+            <div class="term-controls">
+              <span class="term-ctrl">&#x2212;</span>
+              <span class="term-ctrl">&#x2610;</span>
+              <span class="term-ctrl term-ctrl-close">&#x2715;</span>
+            </div>
+          </div>
+          <div class="term-body">
+<pre class="term">╭─ Package Details ──────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Tracking ID:  INTLCMI000000004                           Nickname:  Amazon                                         │
+│ Status:  <span class="ty">Loaded</span>                                          Driver:  Rayen                                            │
+│ ETA Window:  Fri May 22, 1:28 PM – Fri May 22, 2:28 PM                                                             │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                    Event History
+╭──────────────────────────┬────────────────────────────────────────────────┬────────────────────────────────────────╮
+│ Time                     │ Event                                          │ Location                               │
+├──────────────────────────┼────────────────────────────────────────────────┼────────────────────────────────────────┤
+│ Fri May 22, 12:53 AM     │ <span class="tdim">Data received</span>                                  │ —                                      │
+│ Fri May 22, 11:09 AM     │ <span class="tb">Received</span>                                       │ Candiac, QC                            │
+│ Fri May 22, 11:09 AM     │ <span class="tc">Delivery station inbound scan</span>                  │ Candiac, QC                            │
+│ Fri May 22, 1:27 PM      │ <span class="ty">Loaded</span>                                         │ Brossard, QC                           │
+╰──────────────────────────┴────────────────────────────────────────────────┴────────────────────────────────────────╯
+<span class="tkey">[Esc]</span> Back to list</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Features ──────────────────────────────────────────────────────────── -->
+<section id="features">
+  <div class="container">
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🎨</div>
+        <h3>Color-coded status</h3>
+        <p>Yellow for out for delivery, green for delivered, cyan for at station, grey for pending — readable at a glance.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔄</div>
+        <h3>Auto &amp; manual refresh</h3>
+        <p>Polls the API automatically every hour. Press <kbd>R</kbd> for an on-demand refresh, rate-limited to once every 5 minutes.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">💾</div>
+        <h3>Persistent tracking</h3>
+        <p>Tracking numbers and cached responses survive between sessions in a local JSON file. No account needed.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📋</div>
+        <h3>Full event history</h3>
+        <p>Press <kbd>Enter</kbd> on any package to view its complete scan timeline with timestamps and locations.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h3>Fully local</h3>
+        <p>No account. No telemetry. No cloud. All data stays on your machine — see the <a href="privacy.html">Privacy Policy</a>.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <h3>No runtime required</h3>
+        <p>Download the self-contained <code>.exe</code> from Releases and run it directly — no .NET installation needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Install ───────────────────────────────────────────────────────────── -->
+<section id="install">
+  <div class="container">
+    <h2>Getting Started</h2>
+
+    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option A — Prebuilt executable <span style="color:var(--muted);font-weight:400;font-size:0.875rem;">(recommended)</span></h3>
+    <ol style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.75rem;font-size:0.95rem;line-height:1.8;">
+      <!-- Replace michaelsanford/IntelcomTracker below -->
+      <li>Go to the <a href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">latest GitHub Release</a></li>
+      <li>Download <code>IntelcomTracker-vX.Y.Z.exe</code></li>
+      <li>Run it — Windows SmartScreen may warn about an unsigned binary; click <em>More info → Run anyway</em></li>
+      <li>Press <kbd>A</kbd> to add your first tracking number</li>
+    </ol>
+
+    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option B — Build from source</h3>
+    <pre class="code"><span class="ps">PS&gt; </span><span class="cmd">winget install Microsoft.DotNet.SDK.9</span>
+<span class="ps">PS&gt; </span><span class="cmd">git clone https://github.com/michaelsanford/IntelcomTracker</span>
+<span class="ps">PS&gt; </span><span class="cmd">cd IntelcomTracker</span>
+<span class="ps">PS&gt; </span><span class="cmd">dotnet run</span></pre>
+    <p style="color:var(--muted);font-size:0.875rem;margin-top:0.75rem;">
+      First run downloads NuGet packages then launches the dashboard.
+    </p>
+  </div>
+</section>
+
+<!-- ─── Key bindings ──────────────────────────────────────────────────────── -->
+<section id="keys">
+  <div class="container">
+    <h2>Key Bindings</h2>
+    <table class="keybindings">
+      <thead><tr><th>Key</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><kbd>A</kbd></td><td>Add a tracking number</td></tr>
+        <tr><td><kbd>D</kbd></td><td>Delete the selected tracking number</td></tr>
+        <tr><td><kbd>R</kbd></td><td>Manual refresh — once per 5 minutes</td></tr>
+        <tr><td><kbd>↑</kbd> / <kbd>↓</kbd></td><td>Navigate between packages</td></tr>
+        <tr><td><kbd>Enter</kbd></td><td>View full event history for the selected package</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Return to dashboard from detail view</td></tr>
+        <tr><td><kbd>Q</kbd></td><td>Quit</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ─── Privacy ───────────────────────────────────────────────────────────── -->
+<section id="privacy">
+  <div class="container">
+    <h2>Privacy</h2>
+    <p style="color:var(--muted);margin-bottom:1rem;">IntelcomTracker collects no data. Everything stays on your computer.</p>
+    <ul style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.5rem;font-size:0.95rem;line-height:1.8;">
+      <li>Tracking numbers and cached API responses are stored locally in <code>%LOCALAPPDATA%\IntelcomTracker\tracking.json</code></li>
+      <li>API requests go directly to Intelcom's servers — the developer sees nothing</li>
+      <li>No telemetry, no analytics, no crash reporting, no update checks</li>
+    </ul>
+    <a class="btn btn-secondary" href="privacy.html">Read the full Privacy Policy →</a>
+  </div>
+</section>
+
+<!-- ─── Disclaimer ────────────────────────────────────────────────────────── -->
+<section id="disclaimer">
+  <div class="container">
+    <h2>Disclaimer</h2>
+    <div class="callout">
+      <h3>⚠ Not affiliated with Intelcom Courrier Canada Inc.</h3>
+      <p>
+        IntelcomTracker is an <strong>independent, unofficial, open-source project</strong>.
+        It is <strong>not</strong> affiliated with, endorsed by, authorized by, sponsored by,
+        or connected in any way to <strong>Intelcom Courrier Canada Inc.</strong> or any of its
+        subsidiaries, affiliates, or partners.
+      </p>
+      <p>
+        Intelcom is a trademark of Intelcom Courrier Canada Inc.
+        This project is not sanctioned by them, has no relationship
+        with that company, and they bear no responsibility for it. Use at your own risk.
+      </p>
+    </div>
+    <p style="color:var(--muted);font-size:0.875rem;">
+      This tool queries the same public HTTPS endpoint your browser uses when you visit
+      Intelcom's tracking page. See the <a href="privacy.html">Privacy Policy</a> for
+      details on what data is and isn't transmitted.
+    </p>
+  </div>
+</section>
+
+<!-- ─── Footer ───────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <div class="footer-disclaimer">
+      Intelcom is a trademark of Intelcom Courrier Canada Inc.
+      <strong>Not affiliated with, endorsed by, or connected to Intelcom Courrier Canada Inc.</strong>
+    </div>
+    <div class="footer-links">
+      <!-- Replace michaelsanford/IntelcomTracker below -->
+      <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub</a>
+      <a href="https://github.com/michaelsanford/IntelcomTracker/releases">Releases</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

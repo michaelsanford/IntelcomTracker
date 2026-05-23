@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — IntelcomTracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="disclaimer-banner">
+  <strong>⚠ Independent project — not affiliated with Intelcom Express Inc. in any way.</strong>
+  <a href="index.html#disclaimer">Learn more</a>
+</div>
+
+<nav>
+  <a class="nav-brand" href="index.html">IntelcomTracker</a>
+  <div class="nav-links">
+    <a href="index.html#features">Features</a>
+    <a href="index.html#install">Install</a>
+    <a href="index.html#disclaimer">Disclaimer</a>
+    <!-- Replace michaelsanford/IntelcomTracker below -->
+    <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub ↗</a>
+  </div>
+</nav>
+
+<section>
+  <div class="container">
+    <div class="prose">
+      <h1 style="font-size:2rem;font-weight:700;margin-bottom:0.5rem;">Privacy Policy</h1>
+      <p class="meta">Effective date: 2026-05-22</p>
+
+      <p><strong>IntelcomTracker collects no data. Everything stays on your computer.</strong></p>
+
+      <h2>What this app does</h2>
+      <p>
+        IntelcomTracker is a local terminal application. It reads tracking numbers you enter,
+        queries Intelcom's public tracking API on your behalf, and stores the results in a JSON
+        file on your own machine. No data is sent to the developer or any third party controlled
+        by the developer.
+      </p>
+
+      <h2>Data stored locally</h2>
+      <p>The following file is created on first use and contains only data you provide:</p>
+      <pre class="code">%LOCALAPPDATA%\IntelcomTracker\tracking.json</pre>
+      <p>It contains:</p>
+      <ul>
+        <li>Tracking numbers you have added</li>
+        <li>Optional nicknames you assign to them</li>
+        <li>Cached API responses (delivery status, ETA, event history)</li>
+      </ul>
+      <p>
+        This file never leaves your machine unless you copy it yourself.
+        Deleting it removes all stored data completely.
+      </p>
+
+      <h2>Intelcom's API</h2>
+      <p>When you track a package, the app makes an HTTPS request directly to:</p>
+      <pre class="code">https://intelcom.ca/cfworker/v3/tracking/{your-tracking-number}/</pre>
+      <p>
+        This is the same request your browser makes when you visit Intelcom's tracking page.
+        Intelcom's servers will see your tracking number and your IP address as part of normal
+        HTTP traffic. The developer of IntelcomTracker has no visibility into these requests.
+      </p>
+      <p>
+        Refer to <a href="https://intelcom.ca/en/privacy-policy/">Intelcom's Privacy Policy</a>
+        for how Intelcom handles data on their end.
+      </p>
+
+      <h2>What the developer receives</h2>
+      <p>
+        Nothing. The app has no telemetry, no analytics, no crash reporting, and no update checks.
+        It makes no outbound connections other than the Intelcom API requests described above.
+      </p>
+
+      <h2>Third-party services</h2>
+      <p>
+        If you download IntelcomTracker from GitHub Releases, GitHub's standard privacy policy
+        applies to that download. The developer does not control or receive data from that
+        interaction beyond what GitHub makes available to repository owners (e.g., download counts
+        without individual identification).
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        This policy will be updated in this file if anything changes. The effective date at the
+        top reflects the last revision.
+      </p>
+
+      <div class="callout" style="margin-top:2.5rem;">
+        <h3>⚠ Not affiliated with Intelcom Express Inc.</h3>
+        <p>
+          IntelcomTracker is an <strong>independent, unofficial, open-source project</strong>.
+          It is <strong>not</strong> affiliated with, endorsed by, authorized by, or connected
+          in any way to <strong>Intelcom Express Inc.</strong> This project is not sanctioned
+          by them and has no relationship with that company.
+          All trademarks are property of their respective owners.
+        </p>
+      </div>
+
+      <p style="margin-top:1.5rem;">
+        <a href="index.html">← Back to IntelcomTracker</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-disclaimer">
+      IntelcomTracker is an independent open-source project.
+      <strong>Not affiliated with, endorsed by, or connected to Intelcom Express Inc.</strong>
+      All trademarks are the property of their respective owners.
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <!-- Replace michaelsanford/IntelcomTracker below -->
+      <a href="https://github.com/michaelsanford/IntelcomTracker">GitHub</a>
+      <a href="https://github.com/michaelsanford/IntelcomTracker/releases">Releases</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

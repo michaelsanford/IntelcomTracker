@@ -1,0 +1,40 @@
+name: Release
+
+# Trigger by pushing a version tag: git tag v1.0.0 && git push origin v1.0.0
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # required to create a GitHub Release
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.x'
+
+      - name: Publish self-contained Windows executable
+        run: |
+          dotnet publish IntelcomTracker.csproj \
+            --configuration Release \
+            --runtime win-x64 \
+            --self-contained \
+            --output publish/
+
+      - name: Rename artifact to include version
+        run: cp publish/IntelcomTracker.exe "publish/IntelcomTracker-${{ github.ref_name }}.exe"
+
+      - name: Create GitHub Release and attach executable
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            "publish/IntelcomTracker-${{ github.ref_name }}.exe" \
+            --title "${{ github.ref_name }}" \
+            --generate-notes
