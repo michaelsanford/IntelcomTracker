@@ -1,0 +1,32 @@
+name: Feature Request
+description: Suggest a feature
+labels: [enhancement]
+assignees: [michaelsanford]
+body:
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: "e.g. Windows 11 x64, macOS 15 ARM64, Ubuntu 24.04"
+    validations:
+      required: true
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal
+      placeholder: "e.g. Windows Terminal 1.20, iTerm2 3.5, Alacritty 0.14"
+    validations:
+      required: true
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired behavior
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current behavior
+      description: If applicable
+    validations:
+      required: false

@@ -1,0 +1,37 @@
+name: Bug Report
+description: Report a bug
+labels: [bug]
+assignees: [michaelsanford]
+body:
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: "e.g. Windows 11 x64, macOS 15 ARM64, Ubuntu 24.04"
+    validations:
+      required: true
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal
+      placeholder: "e.g. Windows Terminal 1.20, iTerm2 3.5, Alacritty 0.14"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true

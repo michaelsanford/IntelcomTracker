@@ -1,0 +1,32 @@
+name: Legal Complaint
+description: Report a legal or IP concern
+labels: [legal]
+assignees: [michaelsanford]
+body:
+  - type: textarea
+    id: concern
+    attributes:
+      label: Legal concern
+      description: Describe the IP, trademark, or legal issue.
+    validations:
+      required: true
+  - type: textarea
+    id: functionality
+    attributes:
+      label: Functionality in question
+      description: What feature or behavior does this concern?
+    validations:
+      required: true
+  - type: input
+    id: jurisdiction
+    attributes:
+      label: Jurisdiction
+      placeholder: "e.g. Ontario, Canada; California, USA; EU"
+    validations:
+      required: true
+  - type: input
+    id: contact
+    attributes:
+      label: Contact email
+    validations:
+      required: true
