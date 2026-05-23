@@ -3,6 +3,7 @@
 [![CI](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml)
 [![Release](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/michaelsanford/IntelcomTracker)](https://github.com/michaelsanford/IntelcomTracker/releases/latest)
+
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)](https://github.com/michaelsanford/IntelcomTracker)
 [![License](https://img.shields.io/github/license/michaelsanford/IntelcomTracker)](LICENSE)
@@ -144,8 +145,5 @@ IntelcomTracker/
 ├── App.cs                    Live loop, keyboard polling, view switching
 └── Program.cs                Entry point, DI wiring
 ```
-
-
----
 
 Intelcom is a trademark of Intelcom Courrier Canada Inc. This project is not affiliated with, endorsed by, or connected to Intelcom Courrier Canada Inc.
