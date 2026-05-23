@@ -25,6 +25,8 @@ See [PRIVACY.md](PRIVACY.md) for full details.
 
 To report a security vulnerability, please use [GitHub Security Advisories](https://github.com/michaelsanford/IntelcomTracker/security/advisories/new). Do not open a public issue for security reports.
 
+See [SECURITY.md](SECURITY.md) for full details on supported versions, response timelines, and disclosure policy.
+
 ### Package list
 
 ```text
