@@ -5,10 +5,12 @@
 [![GitHub Release](https://img.shields.io/github/v/release/michaelsanford/IntelcomTracker)](https://github.com/michaelsanford/IntelcomTracker/releases/latest)
 
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
-[![Platform](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)](https://github.com/michaelsanford/IntelcomTracker)
+[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-0078D4)](https://github.com/michaelsanford/IntelcomTracker)
 [![License](https://img.shields.io/github/license/michaelsanford/IntelcomTracker)](LICENSE)
 
 Terminal dashboard for tracking Intelcom courier packages in real time. Polls the Intelcom tracking API, persists tracking numbers between sessions, and auto-refreshes every hour. Manual refresh is available on demand but rate-limited to once every 5 minutes.
+
+**Runs natively on Windows, Linux, and macOS** — self-contained binaries with no .NET installation required.
 
 ## Using
 
@@ -70,9 +72,11 @@ See [PRIVACY.md](PRIVACY.md) for full details.
 
 Tracking numbers and cached data are stored at:
 
-```powershell
-%LOCALAPPDATA%\IntelcomTracker\tracking.json
-```
+| OS | Path |
+|----|------|
+| Windows | `%LOCALAPPDATA%\IntelcomTracker\tracking.json` |
+| Linux | `~/.local/share/IntelcomTracker/tracking.json` |
+| macOS | `~/Library/Application Support/IntelcomTracker/tracking.json` |
 
 The file is created automatically on first use. Deleting it resets the app to a clean state.
 
@@ -80,7 +84,6 @@ The file is created automatically on first use. Deleting it resets the app to a 
 
 ### Requirements
 
-- Windows 10/11 (uses `Console.KeyAvailable` which behaves correctly on Windows)
 - .NET 9 SDK
 
 ```powershell
@@ -104,13 +107,21 @@ To build a standalone executable:
 dotnet publish -c Release -r win-x64 --self-contained -o publish\
 ```
 
+Supported runtime identifiers:
+
+| OS | RIDs |
+|----|------|
+| Windows | `win-x64`, `win-arm64` |
+| Linux | `linux-x64`, `linux-arm64`, `linux-musl-x64`, `linux-musl-arm64` |
+| macOS | `osx-x64`, `osx-arm64` |
+
 ### API
 
 Polls `https://intelcom.ca/cfworker/v3/tracking/{id}/` — the same endpoint the Intelcom website uses. No authentication required; the cookie seen in browser DevTools is a consent cookie, not a session token.
 
 ### Releases
 
-Prebuilt self-contained Windows executables are attached to each [GitHub Release](../../releases) — no .NET installation needed to run them.
+Prebuilt self-contained binaries for Windows, Linux, and macOS are attached to each [GitHub Release](../../releases) — no .NET installation needed to run them.
 
 To publish a new release, push a version tag:
 
@@ -119,7 +130,18 @@ git tag v1.0.0
 git push origin v1.0.0
 ```
 
-The release workflow builds a `win-x64` self-contained executable, creates a GitHub Release named after the tag with auto-generated notes, and attaches `IntelcomTracker-v1.0.0.exe` as a downloadable asset.
+The release workflow builds self-contained executables for all supported platforms, creates a GitHub Release named after the tag with auto-generated notes, and attaches the following assets:
+
+| Asset | Platform |
+|-------|----------|
+| `IntelcomTracker-<tag>-win-x64.exe` | Windows x64 |
+| `IntelcomTracker-<tag>-win-arm64.exe` | Windows ARM64 |
+| `IntelcomTracker-<tag>-linux-x64` | Linux x64 |
+| `IntelcomTracker-<tag>-linux-arm64` | Linux ARM64 |
+| `IntelcomTracker-<tag>-linux-musl-x64` | Linux musl x64 (Alpine) |
+| `IntelcomTracker-<tag>-linux-musl-arm64` | Linux musl ARM64 |
+| `IntelcomTracker-<tag>-osx-x64` | macOS x64 (Intel) |
+| `IntelcomTracker-<tag>-osx-arm64` | macOS ARM64 (Apple Silicon) |
 
 ### Running Tests
 

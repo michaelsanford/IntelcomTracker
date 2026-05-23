@@ -33,12 +33,12 @@
   <div class="container">
     <div class="logo">IntelcomTracker</div>
     <p class="tagline">
-      Terminal dashboard for tracking Intelcom courier packages on Windows —
+      Terminal dashboard for tracking Intelcom courier packages on Windows, Linux, and macOS —
       color-coded status, persistent tracking numbers, and hourly auto-refresh.
     </p>
     <div class="btn-group">
       <!-- Replace michaelsanford/IntelcomTracker below -->
-      <a class="btn btn-primary btn-hero" href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">⬇ Download .exe</a>
+      <a class="btn btn-primary btn-hero" href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">⬇ Download Latest Release</a>
       <a class="btn btn-secondary"       href="https://github.com/michaelsanford/IntelcomTracker">View on GitHub</a>
     </div>
   </div>
@@ -150,7 +150,7 @@
       <div class="feature">
         <div class="feature-icon">📦</div>
         <h3>No runtime required</h3>
-        <p>Download the self-contained <code>.exe</code> from Releases and run it directly — no .NET installation needed.</p>
+        <p>Download the self-contained binary for your platform from Releases and run it directly — no .NET installation needed.</p>
       </div>
     </div>
   </div>
@@ -161,12 +161,12 @@
   <div class="container">
     <h2>Getting Started</h2>
 
-    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option A — Prebuilt executable <span style="color:var(--muted);font-weight:400;font-size:0.875rem;">(recommended)</span></h3>
+    <h3 style="font-size:1rem;margin-bottom:0.75rem;">Option A — Prebuilt binary <span style="color:var(--muted);font-weight:400;font-size:0.875rem;">(recommended)</span></h3>
     <ol style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.75rem;font-size:0.95rem;line-height:1.8;">
       <!-- Replace michaelsanford/IntelcomTracker below -->
       <li>Go to the <a href="https://github.com/michaelsanford/IntelcomTracker/releases/latest">latest GitHub Release</a></li>
-      <li>Download <code>IntelcomTracker-vX.Y.Z.exe</code></li>
-      <li>Run it — Windows SmartScreen may warn about an unsigned binary; click <em>More info → Run anyway</em></li>
+      <li>Download the binary for your platform (Windows <code>.exe</code>, Linux, or macOS)</li>
+      <li>Run it — on Windows, SmartScreen may warn about an unsigned binary; on macOS, right-click → Open to bypass Gatekeeper</li>
       <li>Press <kbd>A</kbd> to add your first tracking number</li>
     </ol>
 
@@ -206,7 +206,13 @@
     <h2>Privacy</h2>
     <p style="color:var(--muted);margin-bottom:1rem;">IntelcomTracker collects no data. Everything stays on your computer.</p>
     <ul style="color:var(--muted);margin-left:1.5rem;margin-bottom:1.5rem;font-size:0.95rem;line-height:1.8;">
-      <li>Tracking numbers and cached API responses are stored locally in <code>%LOCALAPPDATA%\IntelcomTracker\tracking.json</code></li>
+      <li>Tracking numbers and cached API responses are stored locally:
+        <ul style="margin-top:0.25rem;">
+          <li><strong>Windows:</strong> <code>%LOCALAPPDATA%\IntelcomTracker\tracking.json</code></li>
+          <li><strong>Linux:</strong> <code>~/.local/share/IntelcomTracker/tracking.json</code></li>
+          <li><strong>macOS:</strong> <code>~/Library/Application Support/IntelcomTracker/tracking.json</code></li>
+        </ul>
+      </li>
       <li>API requests go directly to Intelcom's servers — the developer sees nothing</li>
       <li>No telemetry, no analytics, no crash reporting, no update checks</li>
     </ul>

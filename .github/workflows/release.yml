@@ -7,10 +7,38 @@ on:
       - 'v*'
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # required to create a GitHub Release
+      contents: write
+
+    strategy:
+      matrix:
+        include:
+          - rid: win-x64
+            artifact: IntelcomTracker.exe
+            suffix: win-x64.exe
+          - rid: win-arm64
+            artifact: IntelcomTracker.exe
+            suffix: win-arm64.exe
+          - rid: linux-x64
+            artifact: IntelcomTracker
+            suffix: linux-x64
+          - rid: linux-arm64
+            artifact: IntelcomTracker
+            suffix: linux-arm64
+          - rid: linux-musl-x64
+            artifact: IntelcomTracker
+            suffix: linux-musl-x64
+          - rid: linux-musl-arm64
+            artifact: IntelcomTracker
+            suffix: linux-musl-arm64
+          - rid: osx-x64
+            artifact: IntelcomTracker
+            suffix: osx-x64
+          - rid: osx-arm64
+            artifact: IntelcomTracker
+            suffix: osx-arm64
 
     steps:
       - uses: actions/checkout@v4
@@ -19,22 +47,42 @@ jobs:
         with:
           dotnet-version: '9.x'
 
-      - name: Publish self-contained Windows executable
+      - name: Publish self-contained binary
         run: |
           dotnet publish IntelcomTracker.csproj \
             --configuration Release \
-            --runtime win-x64 \
+            --runtime ${{ matrix.rid }} \
             --self-contained \
             --output publish/
 
-      - name: Rename artifact to include version
-        run: cp publish/IntelcomTracker.exe "publish/IntelcomTracker-${{ github.ref_name }}.exe"
+      - name: Rename artifact
+        run: cp "publish/${{ matrix.artifact }}" "publish/IntelcomTracker-${{ github.ref_name }}-${{ matrix.suffix }}"
 
-      - name: Create GitHub Release and attach executable
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.suffix }}
+          path: publish/IntelcomTracker-${{ github.ref_name }}-${{ matrix.suffix }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: assets/
+          merge-multiple: true
+
+      - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "${{ github.ref_name }}" \
-            "publish/IntelcomTracker-${{ github.ref_name }}.exe" \
+            assets/* \
+            --repo "${{ github.repository }}" \
             --title "${{ github.ref_name }}" \
             --generate-notes
