@@ -3,8 +3,18 @@ name: CI
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/FUNDING.yml'
+      - '.github/workflows/release.yml'
   pull_request:
     branches: [main]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+      - '.github/FUNDING.yml'
+      - '.github/workflows/release.yml'
 
 jobs:
   build-and-test:
