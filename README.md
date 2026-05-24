@@ -1,9 +1,15 @@
 # IntelcomTracker
 
 [![CI](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/ci.yml)
-[![Release](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml)
 [![CodeQL](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/github-code-scanning/codeql)
+[![Release](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml/badge.svg)](https://github.com/michaelsanford/IntelcomTracker/actions/workflows/release.yml)
+
 [![GitHub Release](https://img.shields.io/github/v/release/michaelsanford/IntelcomTracker)](https://github.com/michaelsanford/IntelcomTracker/releases/latest)
+
+[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+[![Sigstore](https://img.shields.io/badge/sigstore-signed-blueviolet?logo=sigstore)](https://www.sigstore.dev/)
+[![SBOM](https://img.shields.io/badge/SBOM-CycloneDX-informational?logo=owasp)](https://cyclonedx.org/)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/michaelsanford/IntelcomTracker/badge)](https://scorecard.dev/viewer/?uri=github.com/michaelsanford/IntelcomTracker)
 
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-0078D4)](https://github.com/michaelsanford/IntelcomTracker)
@@ -12,6 +18,42 @@
 Terminal dashboard for tracking Intelcom courier packages in real time. Polls the Intelcom tracking API, persists tracking numbers between sessions, and auto-refreshes every hour. Manual refresh is available on demand but rate-limited to once every 5 minutes.
 
 **Runs natively on Windows, Linux, and macOS** — self-contained binaries with no .NET installation required.
+
+## Supported Platforms
+
+| OS | Architecture | Binary |
+| --- | --- | --- |
+| Windows | x64, ARM64 | `.exe` |
+| Linux (glibc) | x64, ARM64 | ELF |
+| Linux (musl/Alpine) | x64, ARM64 | ELF |
+| macOS | x64 (Intel), ARM64 (Apple Silicon) | Mach-O |
+
+All 8 targets are built and released automatically on every tagged version.
+
+## Supply Chain Security
+
+Every release artifact includes:
+
+| Measure | What it proves |
+| --- | --- |
+| **GitHub Attestation** | Binary was built by this repo's CI, not tampered post-build |
+| **Sigstore cosign signature** | Keyless cryptographic signature tied to the GitHub Actions OIDC identity; verifiable by anyone |
+| **CycloneDX SBOM** | Machine-readable bill of materials listing all dependencies and their versions |
+
+### Verifying a release
+
+```bash
+# GitHub attestation
+gh attestation verify IntelcomTracker-v1.1.1-linux-x64 --owner michaelsanford
+
+# Sigstore cosign
+cosign verify-blob IntelcomTracker-v1.1.1-linux-x64 \
+  --bundle IntelcomTracker-v1.1.1-linux-x64.bundle \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+  --certificate-identity https://github.com/michaelsanford/IntelcomTracker/.github/workflows/release.yml@refs/tags/v1.1.1
+```
+
+See [SECURITY_SIGNING.md](SECURITY_SIGNING.md) for full details.
 
 ## Using
 
@@ -80,7 +122,7 @@ See [SECURITY.md](SECURITY.md) for full details on supported versions, response 
 Tracking numbers and cached data are stored at:
 
 | OS | Path |
-|----|------|
+| --- | --- |
 | Windows | `%LOCALAPPDATA%\IntelcomTracker\tracking.json` |
 | Linux | `~/.local/share/IntelcomTracker/tracking.json` |
 | macOS | `~/Library/Application Support/IntelcomTracker/tracking.json` |
@@ -117,7 +159,7 @@ dotnet publish -c Release -r win-x64 --self-contained -o publish\
 Supported runtime identifiers:
 
 | OS | RIDs |
-|----|------|
+| --- | --- |
 | Windows | `win-x64`, `win-arm64` |
 | Linux | `linux-x64`, `linux-arm64`, `linux-musl-x64`, `linux-musl-arm64` |
 | macOS | `osx-x64`, `osx-arm64` |
@@ -140,7 +182,7 @@ git push origin v1.0.0
 The release workflow builds self-contained executables for all supported platforms, creates a GitHub Release named after the tag with auto-generated notes, and attaches the following assets:
 
 | Asset | Platform |
-|-------|----------|
+| --- | --- |
 | `IntelcomTracker-<tag>-win-x64.exe` | Windows x64 |
 | `IntelcomTracker-<tag>-win-arm64.exe` | Windows ARM64 |
 | `IntelcomTracker-<tag>-linux-x64` | Linux x64 |

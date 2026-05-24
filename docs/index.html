@@ -24,9 +24,11 @@
   <a class="nav-brand" href="index.html">IntelcomTracker</a>
   <div class="nav-links">
     <a href="#features">Features</a>
+    <a href="#platforms">Platforms</a>
     <a href="#install">Install</a>
     <a href="#keys">Keys</a>
     <a href="privacy.html">Privacy</a>
+    <a href="#provenance">Provenance</a>
     <a href="#bugs">Bugs</a>
     <a href="#security">Security</a>
     <a href="#disclaimer">Disclaimer</a>
@@ -163,6 +165,23 @@
   </div>
 </section>
 
+<!-- ─── Platforms ─────────────────────────────────────────────────────────── -->
+<section id="platforms">
+  <div class="container">
+    <h2>Runs Everywhere</h2>
+    <p class="section-intro">Self-contained binaries — no .NET installation required. Just download and run.</p>
+    <table class="keybindings">
+      <thead><tr><th>OS</th><th>Architecture</th><th>Format</th></tr></thead>
+      <tbody>
+        <tr><td>Windows</td><td>x64, ARM64</td><td><code>.exe</code></td></tr>
+        <tr><td>Linux (glibc)</td><td>x64, ARM64</td><td>ELF</td></tr>
+        <tr><td>Linux (musl / Alpine)</td><td>x64, ARM64</td><td>ELF</td></tr>
+        <tr><td>macOS</td><td>Intel, Apple Silicon</td><td>Mach-O</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
 <!-- ─── Install ───────────────────────────────────────────────────────────── -->
 <section id="install">
   <div class="container">
@@ -224,6 +243,31 @@
       <li>No telemetry, no analytics, no crash reporting, no update checks</li>
     </ul>
     <a class="btn btn-secondary" href="privacy.html">Read the full Privacy Policy →</a>
+  </div>
+</section>
+
+<!-- ─── Provenance ────────────────────────────────────────────────────────── -->
+<section id="provenance">
+  <div class="container">
+    <h2>Verified Builds</h2>
+    <p class="section-intro">Every release is cryptographically signed and auditable. You can verify that the binary you downloaded was built by this project's CI — not modified by anyone after the fact.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🔏</div>
+        <h3>Sigstore cosign</h3>
+        <p>Keyless cryptographic signature tied to the GitHub Actions build. Verifiable by anyone, no trust-on-first-use.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📜</div>
+        <h3>GitHub Attestation</h3>
+        <p>Proves the binary was produced by a specific commit in this repo's CI pipeline — not someone's laptop.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📦</div>
+        <h3>SBOM included</h3>
+        <p>Every release ships a CycloneDX bill of materials listing all dependencies and versions. Scan it for CVEs yourself.</p>
+      </div>
+    </div>
   </div>
 </section>
 
