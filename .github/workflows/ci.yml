@@ -29,8 +29,11 @@ jobs:
         with:
           dotnet-version: '9.x'
 
+      - name: Restore
+        run: dotnet restore IntelcomTracker.Tests/ --locked-mode
+
       - name: Build
-        run: dotnet build IntelcomTracker.Tests/ --configuration Release
+        run: dotnet build IntelcomTracker.Tests/ --configuration Release --no-restore
 
       - name: Test
         run: dotnet test IntelcomTracker.Tests/ --configuration Release --no-build --logger "console;verbosity=normal"
