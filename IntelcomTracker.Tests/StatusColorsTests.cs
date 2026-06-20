@@ -10,14 +10,20 @@ public class StatusColorsTests
     [InlineData(105, "blue")]
     [InlineData(108, "cyan1")]
     [InlineData(300, "yellow")]
-    [InlineData(400, "bright_green")]
-    [InlineData(499, "bright_green")]  // boundary: last code in 400-499 band
+    [InlineData(400, "green")]
+    [InlineData(499, "green")]  // boundary: last code in 400-499 band
     [InlineData(500, "red")]
     [InlineData(999, "red")]
     [InlineData(1,   "white")]         // unknown code below 105
     [InlineData(200, "white")]         // unknown code between known values
     public void GetColor_KnownStatusCode_ReturnsExpectedColor(int code, string expected)
         => Assert.Equal(expected, StatusColors.GetColor(code));
+
+    [Theory]
+    [InlineData(500, "green")]  // e.g. "Delivered - No Signature" has a 5xx code but isDelivered=true
+    [InlineData(999, "green")]
+    public void GetColor_IsDelivered_AlwaysReturnsGreen(int code, string expected)
+        => Assert.Equal(expected, StatusColors.GetColor(code, isDelivered: true));
 
     [Fact]
     public void Colorize_WrapsTextInMarkupTags()

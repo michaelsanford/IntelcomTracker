@@ -24,7 +24,7 @@ public static class DetailView
                 : ""));
 
         infoGrid.AddRow(
-            new Markup($"[grey]Status:[/]  {StatusColors.Colorize(shortLabel, sc)}"),
+            new Markup($"[grey]Status:[/]  {StatusColors.Colorize(shortLabel, sc, last?.IsDelivered ?? false)}"),
             new Markup(data?.DriverName is not null
                 ? $"[grey]Driver:[/]  [white]{Markup.Escape(data.DriverName)}[/]"
                 : ""));
@@ -67,7 +67,7 @@ public static class DetailView
 
             histTable.AddRow(
                 new Markup($"[grey]{Markup.Escape(time)}[/]"),
-                new Markup(StatusColors.Colorize(label, evt.StatusCode)),
+                new Markup(StatusColors.Colorize(label, evt.StatusCode, evt.IsDelivered)),
                 new Markup(Markup.Escape(loc)));
         }
 

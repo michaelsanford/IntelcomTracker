@@ -61,7 +61,7 @@ public static class DashboardView
                 var last = pkg.CachedData.LastStatus;
                 var sc = last?.StatusCode ?? 0;
                 var label = last?.Labels?.En?.ShortLabel ?? last?.Label ?? "Unknown";
-                statusMarkup = new Markup(StatusColors.Colorize(label, sc));
+                statusMarkup = new Markup(StatusColors.Colorize(label, sc, last?.IsDelivered ?? false));
 
                 var city = last?.PackageLocation?.Address?.City;
                 var prov = last?.PackageLocation?.Address?.StateProvince;
