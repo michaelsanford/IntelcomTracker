@@ -132,10 +132,10 @@ The file is created automatically on first use. Deleting it resets the app to a 
 
 ### Requirements
 
-- .NET 9 SDK
+- .NET 10 SDK
 
 ```powershell
-winget install Microsoft.DotNet.SDK.9
+winget install Microsoft.DotNet.SDK.10
 ```
 
 Open a new terminal after installation so PATH is updated.
