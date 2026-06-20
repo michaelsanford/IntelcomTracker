@@ -18,6 +18,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 jobs:
   build-and-test:
@@ -36,4 +37,30 @@ jobs:
         run: dotnet build IntelcomTracker.Tests/ --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test IntelcomTracker.Tests/ --configuration Release --no-build --logger "console;verbosity=normal"
+        run: >
+          dotnet test IntelcomTracker.Tests/
+          --configuration Release --no-build
+          --logger "console;verbosity=normal"
+          --collect:"XPlat Code Coverage"
+          --results-directory ./coverage
+
+      - name: Generate coverage report
+        run: |
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+          export PATH="$PATH:$HOME/.dotnet/tools"
+          reportgenerator \
+            -reports:"coverage/**/coverage.cobertura.xml" \
+            -targetdir:coverage/report \
+            -reporttypes:MarkdownSummaryGithub
+
+      - name: Write coverage to job summary
+        run: cat coverage/report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post coverage as PR comment
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh pr comment "${{ github.event.pull_request.number }}"
+          --repo "${{ github.repository }}"
+          --body-file coverage/report/SummaryGithub.md
