@@ -9,7 +9,6 @@
 [![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
 [![Sigstore](https://img.shields.io/badge/sigstore-signed-blueviolet?logo=sigstore)](https://www.sigstore.dev/)
 [![SBOM](https://img.shields.io/badge/SBOM-CycloneDX-informational?logo=owasp)](https://cyclonedx.org/)
-[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/michaelsanford/IntelcomTracker/badge)](https://scorecard.dev/viewer/?uri=github.com/michaelsanford/IntelcomTracker)
 
 [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-0078D4)](https://github.com/michaelsanford/IntelcomTracker)
