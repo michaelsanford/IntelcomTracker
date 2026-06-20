@@ -10,7 +10,7 @@
 [![Sigstore](https://img.shields.io/badge/sigstore-signed-blueviolet?logo=sigstore)](https://www.sigstore.dev/)
 [![SBOM](https://img.shields.io/badge/SBOM-CycloneDX-informational?logo=owasp)](https://cyclonedx.org/)
 
-[![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-0078D4)](https://github.com/michaelsanford/IntelcomTracker)
 [![License](https://img.shields.io/github/license/michaelsanford/IntelcomTracker)](LICENSE)
 
