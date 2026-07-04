@@ -23,21 +23,21 @@ public class TrackingStoreService : ITrackingStoreService
 
     public TrackingStoreService(string? storePath = null)
     {
-        var resolved = Path.GetFullPath(storePath ?? Path.Combine(AppDataDir, "tracking.json"));
+        var appDataRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(AppDataDir));
+        var tempRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetTempPath()));
+        var resolved = Path.GetFullPath(storePath ?? Path.Combine(appDataRoot, "tracking.json"));
 
-        if (!IsWithin(resolved, AppDataDir) && !IsWithin(resolved, Path.GetTempPath()))
+        // Normalize, then confirm the resolved path stays within a trusted root
+        // (app-data dir, or the temp dir used by tests) before any file I/O.
+        if (!resolved.StartsWith(appDataRoot + Path.DirectorySeparatorChar, StringComparison.Ordinal) &&
+            !resolved.StartsWith(tempRoot + Path.DirectorySeparatorChar, StringComparison.Ordinal))
+        {
             throw new ArgumentException(
                 "Store path must be within the application data or temp directory.",
                 nameof(storePath));
+        }
 
         StorePath = resolved;
-    }
-
-    private static bool IsWithin(string path, string root)
-    {
-        root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(root));
-        return path == root
-            || path.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal);
     }
 
     public TrackingStore Load()
