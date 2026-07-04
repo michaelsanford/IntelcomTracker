@@ -78,4 +78,9 @@ public class TrackingStoreServiceTests : IDisposable
         }
         finally { Directory.Delete(dir, recursive: true); }
     }
+
+    [Fact]
+    public void Ctor_RejectsPathOutsideAllowedRoots() =>
+        Assert.Throws<ArgumentException>(() =>
+            new TrackingStoreService(Path.Combine(AppContext.BaseDirectory, "evil.json")));
 }

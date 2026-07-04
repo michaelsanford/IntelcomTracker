@@ -15,14 +15,29 @@ public class TrackingStoreService : ITrackingStoreService
     private static readonly JsonSerializerOptions _writeOptions = new() { WriteIndented = true };
     private static readonly JsonSerializerOptions _readOptions = new() { PropertyNameCaseInsensitive = true };
 
+    private static readonly string AppDataDir = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "IntelcomTracker");
+
     public string StorePath { get; }
 
     public TrackingStoreService(string? storePath = null)
     {
-        StorePath = storePath ?? Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "IntelcomTracker",
-            "tracking.json");
+        var resolved = Path.GetFullPath(storePath ?? Path.Combine(AppDataDir, "tracking.json"));
+
+        if (!IsWithin(resolved, AppDataDir) && !IsWithin(resolved, Path.GetTempPath()))
+            throw new ArgumentException(
+                "Store path must be within the application data or temp directory.",
+                nameof(storePath));
+
+        StorePath = resolved;
+    }
+
+    private static bool IsWithin(string path, string root)
+    {
+        root = Path.TrimEndingDirectorySeparator(Path.GetFullPath(root));
+        return path == root
+            || path.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal);
     }
 
     public TrackingStore Load()
