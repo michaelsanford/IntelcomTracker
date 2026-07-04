@@ -1,5 +1,8 @@
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using IntelcomTracker.Models;
+
+[assembly: InternalsVisibleTo("IntelcomTracker.Tests")]
 
 namespace IntelcomTracker.Services;
 
@@ -21,14 +24,26 @@ public class TrackingStoreService : ITrackingStoreService
 
     public string StorePath { get; }
 
-    public TrackingStoreService(string? storePath = null)
+    /// <summary>
+    /// Production constructor: the store always lives at a fixed, trusted location
+    /// under the user's local application data. No caller-supplied path is accepted,
+    /// so there is no external path input to the file operations.
+    /// </summary>
+    public TrackingStoreService()
+        : this(Path.Combine(AppDataDir, "tracking.json")) { }
+
+    /// <summary>
+    /// Test-only constructor. Kept <c>internal</c> (exposed to the test assembly via
+    /// <see cref="InternalsVisibleTo"/>) so an arbitrary path is not part of the
+    /// public API surface. The path is still normalized and confined to a trusted
+    /// root as defense in depth.
+    /// </summary>
+    internal TrackingStoreService(string storePath)
     {
         var appDataRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(AppDataDir));
         var tempRoot = Path.TrimEndingDirectorySeparator(Path.GetFullPath(Path.GetTempPath()));
-        var resolved = Path.GetFullPath(storePath ?? Path.Combine(appDataRoot, "tracking.json"));
+        var resolved = Path.GetFullPath(storePath);
 
-        // Normalize, then confirm the resolved path stays within a trusted root
-        // (app-data dir, or the temp dir used by tests) before any file I/O.
         if (!resolved.StartsWith(appDataRoot + Path.DirectorySeparatorChar, StringComparison.Ordinal) &&
             !resolved.StartsWith(tempRoot + Path.DirectorySeparatorChar, StringComparison.Ordinal))
         {
