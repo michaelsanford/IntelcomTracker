@@ -32,10 +32,13 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
-      # Snyk reads the restored dependency graph (obj/project.assets.json),
-      # so a restore has to happen before the scan.
+      # Snyk reads the restored dependency graph (obj/project.assets.json), so a
+      # restore has to happen before the scan. There is no solution file here, so a
+      # bare `dotnet restore` covers only the root project and leaves the test
+      # project's dependencies unscanned.
       - name: Restore
-        run: dotnet restore
+        shell: bash
+        run: find . -name '*.csproj' -print0 | xargs -0 -n1 dotnet restore
 
       - name: Install Snyk CLI
         uses: snyk/actions/setup@12140f4059e244892ae643824a95459a102120dd # master, 2026-08-27
