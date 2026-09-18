@@ -9,26 +9,24 @@ namespace IntelcomTracker;
 public enum AppView { Dashboard, Detail }
 public enum PendingAction { None, Quit, AddPackage, DeletePackage }
 
-public class App
+public class App(
+    ITrackingStoreService persistence,
+    RefreshService refreshService,
+    TimeProvider? timeProvider = null)
 {
-    private readonly ITrackingStoreService _persistence;
-    private readonly RefreshService _refreshService;
+    private readonly ITrackingStoreService _persistence = persistence;
+    private readonly RefreshService _refreshService = refreshService;
+    private readonly TimeProvider _timeProvider = timeProvider ?? TimeProvider.System;
 
     private const int ManualCooldownSeconds = 300;
 
     private TrackingStore _store = new();
     private AppView _currentView = AppView.Dashboard;
-    private int _selectedIndex = 0;
-    private int? _detailIndex = null;
+    private int _selectedIndex;
+    private int? _detailIndex;
     private PendingAction _pendingAction = PendingAction.None;
-    private bool _forceRefresh = false;
+    private bool _forceRefresh;
     private DateTime _lastRefreshed = DateTime.MinValue;
-
-    public App(ITrackingStoreService persistence, RefreshService refreshService)
-    {
-        _persistence = persistence;
-        _refreshService = refreshService;
-    }
 
     public async Task RunAsync()
     {
@@ -38,7 +36,7 @@ public class App
         {
             AnsiConsole.MarkupLine("[grey]Refreshing packages...[/]");
             await _refreshService.RefreshAllAsync(_store, CancellationToken.None);
-            _lastRefreshed = DateTime.UtcNow;
+            _lastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
         }
 
         while (true)
@@ -66,7 +64,7 @@ public class App
     {
         using var cts = new CancellationTokenSource();
         var ct = cts.Token;
-        var nextAutoRefresh = DateTime.UtcNow.AddSeconds(_store.RefreshIntervalSeconds);
+        var nextAutoRefresh = _timeProvider.GetUtcNow().UtcDateTime.AddSeconds(_store.RefreshIntervalSeconds);
 
         await AnsiConsole.Live(BuildCurrentRenderable(nextAutoRefresh))
             .AutoClear(true)
@@ -80,15 +78,15 @@ public class App
                     {
                         _forceRefresh = false;
                         await _refreshService.RefreshAllAsync(_store, ct);
-                        _lastRefreshed = DateTime.UtcNow;
-                        nextAutoRefresh = DateTime.UtcNow.AddSeconds(_store.RefreshIntervalSeconds);
+                        _lastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
+                        nextAutoRefresh = _timeProvider.GetUtcNow().UtcDateTime.AddSeconds(_store.RefreshIntervalSeconds);
                     }
 
-                    if (DateTime.UtcNow >= nextAutoRefresh)
+                    if (_timeProvider.GetUtcNow().UtcDateTime >= nextAutoRefresh)
                     {
                         await _refreshService.RefreshAllAsync(_store, ct);
-                        _lastRefreshed = DateTime.UtcNow;
-                        nextAutoRefresh = DateTime.UtcNow.AddSeconds(_store.RefreshIntervalSeconds);
+                        _lastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
+                        nextAutoRefresh = _timeProvider.GetUtcNow().UtcDateTime.AddSeconds(_store.RefreshIntervalSeconds);
                     }
 
                     if (Console.KeyAvailable)
@@ -100,7 +98,7 @@ public class App
                     if (!ct.IsCancellationRequested)
                         ctx.UpdateTarget(BuildCurrentRenderable(nextAutoRefresh));
 
-                    try { await Task.Delay(100, ct); }
+                    try { await Task.Delay(TimeSpan.FromMilliseconds(100), _timeProvider, ct); }
                     catch (OperationCanceledException) { break; }
                 }
             });
@@ -129,7 +127,7 @@ public class App
                 break;
 
             case ConsoleKey.R:
-                if ((DateTime.UtcNow - _lastRefreshed).TotalSeconds >= ManualCooldownSeconds)
+                if ((_timeProvider.GetUtcNow().UtcDateTime - _lastRefreshed).TotalSeconds >= ManualCooldownSeconds)
                     _forceRefresh = true;
                 break;
 
@@ -161,7 +159,7 @@ public class App
         _currentView == AppView.Detail && _detailIndex is { } idx && idx < _store.Packages.Count
             ? DetailView.Build(_store.Packages[idx])
             : DashboardView.Build(_store, _selectedIndex, nextAutoRefresh,
-                _lastRefreshed.AddSeconds(ManualCooldownSeconds));
+                _lastRefreshed.AddSeconds(ManualCooldownSeconds), _timeProvider);
 
     private async Task HandleAddAsync()
     {
@@ -172,14 +170,14 @@ public class App
         if (string.IsNullOrWhiteSpace(trackingId))
         {
             AnsiConsole.MarkupLine("[red]No tracking number entered.[/]");
-            await Task.Delay(1200);
+            await Task.Delay(TimeSpan.FromMilliseconds(1200), _timeProvider, CancellationToken.None);
             return;
         }
 
         if (_store.Packages.Any(p => p.TrackingId.Equals(trackingId, StringComparison.OrdinalIgnoreCase)))
         {
             AnsiConsole.MarkupLine("[yellow]Already tracking that number.[/]");
-            await Task.Delay(1200);
+            await Task.Delay(TimeSpan.FromMilliseconds(1200), _timeProvider, CancellationToken.None);
             return;
         }
 
@@ -190,7 +188,7 @@ public class App
         {
             TrackingId = trackingId,
             Nickname = string.IsNullOrWhiteSpace(nickname) ? null : nickname,
-            AddedAt = DateTime.UtcNow
+            AddedAt = _timeProvider.GetUtcNow().UtcDateTime
         };
 
         _store.Packages.Add(pkg);
@@ -199,7 +197,7 @@ public class App
 
         AnsiConsole.MarkupLine("[grey]Fetching tracking data...[/]");
         await _refreshService.RefreshAllAsync(_store, CancellationToken.None);
-        _lastRefreshed = DateTime.UtcNow;
+        _lastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
     }
 
     private void HandleDelete()

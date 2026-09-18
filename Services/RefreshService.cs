@@ -2,16 +2,14 @@ using IntelcomTracker.Models;
 
 namespace IntelcomTracker.Services;
 
-public class RefreshService
+public class RefreshService(
+    IIntelcomApiClient api,
+    ITrackingStoreService persistence,
+    TimeProvider? timeProvider = null)
 {
-    private readonly IIntelcomApiClient _api;
-    private readonly ITrackingStoreService _persistence;
-
-    public RefreshService(IIntelcomApiClient api, ITrackingStoreService persistence)
-    {
-        _api = api;
-        _persistence = persistence;
-    }
+    private readonly IIntelcomApiClient _api = api;
+    private readonly ITrackingStoreService _persistence = persistence;
+    private readonly TimeProvider _timeProvider = timeProvider ?? TimeProvider.System;
 
     public async Task RefreshAllAsync(TrackingStore store, CancellationToken ct)
     {
@@ -25,7 +23,7 @@ public class RefreshService
         try
         {
             var result = await _api.GetTrackingAsync(pkg.TrackingId, ct);
-            pkg.LastRefreshed = DateTime.UtcNow;
+            pkg.LastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
             if (result != null)
             {
                 pkg.CachedData = result;
@@ -39,7 +37,7 @@ public class RefreshService
         catch (OperationCanceledException) { throw; }
         catch (Exception ex)
         {
-            pkg.LastRefreshed = DateTime.UtcNow;
+            pkg.LastRefreshed = _timeProvider.GetUtcNow().UtcDateTime;
             pkg.LastError = ex.Message;
         }
     }

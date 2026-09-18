@@ -1,4 +1,4 @@
-using System.Text.Json;
+using System.Net.Http.Json;
 using IntelcomTracker.Models;
 
 namespace IntelcomTracker.Services;
@@ -8,12 +8,9 @@ public interface IIntelcomApiClient
     Task<TrackingResult?> GetTrackingAsync(string trackingId, CancellationToken ct = default);
 }
 
-public class IntelcomApiClient : IIntelcomApiClient
+public class IntelcomApiClient(HttpClient http) : IIntelcomApiClient
 {
-    private readonly HttpClient _http;
-    private static readonly JsonSerializerOptions _jsonOptions = new() { PropertyNameCaseInsensitive = true };
-
-    public IntelcomApiClient(HttpClient http) => _http = http;
+    private readonly HttpClient _http = http;
 
     public async Task<TrackingResult?> GetTrackingAsync(string trackingId, CancellationToken ct = default)
     {
@@ -34,8 +31,9 @@ public class IntelcomApiClient : IIntelcomApiClient
             var response = await _http.SendAsync(request, ct);
             if (!response.IsSuccessStatusCode) return null;
 
-            var stream = await response.Content.ReadAsStreamAsync(ct);
-            var wrapper = await JsonSerializer.DeserializeAsync<ApiResponseWrapper>(stream, _jsonOptions, ct);
+            var wrapper = await response.Content.ReadFromJsonAsync(
+                IntelcomJsonContext.Default.ApiResponseWrapper,
+                ct);
             return wrapper?.Data?.Result;
         }
         catch (OperationCanceledException) { throw; }

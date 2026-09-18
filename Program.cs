@@ -8,7 +8,9 @@ Console.OutputEncoding = Encoding.UTF8;
 Console.CursorVisible = false;
 
 var services = new ServiceCollection();
-services.AddHttpClient<IIntelcomApiClient, IntelcomApiClient>();
+services.AddSingleton(TimeProvider.System);
+services.AddHttpClient<IIntelcomApiClient, IntelcomApiClient>()
+    .AddStandardResilienceHandler();
 services.AddSingleton<ITrackingStoreService, TrackingStoreService>();
 services.AddSingleton<RefreshService>();
 services.AddSingleton<App>();

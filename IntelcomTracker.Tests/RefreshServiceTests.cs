@@ -1,5 +1,6 @@
 using IntelcomTracker.Models;
 using IntelcomTracker.Services;
+using Microsoft.Extensions.Time.Testing;
 using Xunit;
 
 namespace IntelcomTracker.Tests;
@@ -8,10 +9,9 @@ public class RefreshServiceTests
 {
     // --- Fakes ---
 
-    private class FakeApi : IIntelcomApiClient
+    private sealed class FakeApi(Func<string, Task<TrackingResult?>> handler) : IIntelcomApiClient
     {
-        private readonly Func<string, Task<TrackingResult?>> _handler;
-        public FakeApi(Func<string, Task<TrackingResult?>> handler) => _handler = handler;
+        private readonly Func<string, Task<TrackingResult?>> _handler = handler;
         public Task<TrackingResult?> GetTrackingAsync(string id, CancellationToken ct = default)
             => _handler(id);
     }
@@ -22,7 +22,7 @@ public class RefreshServiceTests
     private static FakeApi Throws(Exception ex)
         => new(_ => Task.FromException<TrackingResult?>(ex));
 
-    private class FakePersistence : ITrackingStoreService
+    private sealed class FakePersistence : ITrackingStoreService
     {
         public int SaveCount { get; private set; }
         public TrackingStore Load() => new();
@@ -51,6 +51,21 @@ public class RefreshServiceTests
         Assert.Same(result, pkg.CachedData);
         Assert.Null(pkg.LastError);
         Assert.NotNull(pkg.LastRefreshed);
+    }
+
+    [Fact]
+    public async Task RefreshAllAsync_UsesInjectedTimeProvider()
+    {
+        var fixedTime = new DateTimeOffset(2026, 9, 18, 14, 0, 0, TimeSpan.Zero);
+        var fakeTime = new FakeTimeProvider(fixedTime);
+        var result = new TrackingResult { TrackingId = "ABC" };
+        var (svc, _) = (new RefreshService(Returns(result), new FakePersistence(), fakeTime), new FakePersistence());
+        var pkg = new TrackedPackage { TrackingId = "ABC" };
+        var trackingStore = new TrackingStore { Packages = [pkg] };
+
+        await svc.RefreshAllAsync(trackingStore, CancellationToken.None);
+
+        Assert.Equal(fixedTime.UtcDateTime, pkg.LastRefreshed);
     }
 
     [Fact]
@@ -87,7 +102,7 @@ public class RefreshServiceTests
         var good = new TrackingResult { TrackingId = "GOOD" };
         var api = new FakeApi(id => id == "GOOD"
             ? Task.FromResult<TrackingResult?>(good)
-            : Task.FromException<TrackingResult?>(new Exception("boom")));
+            : Task.FromException<TrackingResult?>(new InvalidOperationException("boom")));
 
         var (svc, _) = Build(api);
         var pkgGood = new TrackedPackage { TrackingId = "GOOD" };

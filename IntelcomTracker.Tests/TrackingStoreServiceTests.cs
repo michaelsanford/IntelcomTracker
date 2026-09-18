@@ -4,14 +4,18 @@ using Xunit;
 
 namespace IntelcomTracker.Tests;
 
-public class TrackingStoreServiceTests : IDisposable
+public sealed class TrackingStoreServiceTests : IDisposable
 {
     private readonly string _path = Path.Combine(Path.GetTempPath(), $"intelcom-test-{Guid.NewGuid()}.json");
     private readonly TrackingStoreService _svc;
 
     public TrackingStoreServiceTests() => _svc = new TrackingStoreService(_path);
 
-    public void Dispose() { if (File.Exists(_path)) File.Delete(_path); }
+    public void Dispose()
+    {
+        if (File.Exists(_path)) File.Delete(_path);
+        GC.SuppressFinalize(this);
+    }
 
     [Fact]
     public void Load_WhenFileMissing_ReturnsEmptyStore()
@@ -77,6 +81,18 @@ public class TrackingStoreServiceTests : IDisposable
             Assert.True(Directory.Exists(dir));
         }
         finally { Directory.Delete(dir, recursive: true); }
+    }
+
+    [Fact]
+    public void Save_OverwritesExistingFileAtomically()
+    {
+        var store1 = new TrackingStore { Packages = [new TrackedPackage { TrackingId = "PKG1" }] };
+        _svc.Save(store1);
+        Assert.Equal("PKG1", _svc.Load().Packages[0].TrackingId);
+
+        var store2 = new TrackingStore { Packages = [new TrackedPackage { TrackingId = "PKG2" }] };
+        _svc.Save(store2);
+        Assert.Equal("PKG2", _svc.Load().Packages[0].TrackingId);
     }
 
     [Fact]

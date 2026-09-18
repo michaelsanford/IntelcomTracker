@@ -1,3 +1,4 @@
+using System.Globalization;
 using IntelcomTracker.Models;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -55,7 +56,7 @@ public static class DetailView
         {
             var time = DateTimeOffset.FromUnixTimeMilliseconds(evt.Timestamp)
                 .ToLocalTime()
-                .ToString("ddd MMM d, h:mm tt");
+                .ToString("ddd MMM d, h:mm tt", CultureInfo.CurrentCulture);
 
             var city = evt.PackageLocation?.Address?.City;
             var prov = evt.PackageLocation?.Address?.StateProvince;
@@ -71,7 +72,7 @@ public static class DetailView
                 new Markup(Markup.Escape(loc)));
         }
 
-        if (!events.Any())
+        if (events.Count == 0)
             histTable.AddRow(new Markup("[grey dim]No history available.[/]"), new Markup(""), new Markup(""));
 
         var footer = new Markup("[grey dim][[Esc]][/] Back  [grey dim][[R]][/] Refresh");
@@ -85,7 +86,7 @@ public static class DetailView
 
         static string T(string? iso) =>
             DateTimeOffset.TryParse(iso, out var dt)
-                ? dt.ToLocalTime().ToString("ddd MMM d, h:mm tt")
+                ? dt.ToLocalTime().ToString("ddd MMM d, h:mm tt", CultureInfo.CurrentCulture)
                 : iso ?? "?";
 
         if (eta.From is null && eta.To is null) return "—";

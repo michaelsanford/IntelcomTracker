@@ -9,13 +9,10 @@ public class IntelcomApiClientTests
 {
     // --- Fake transport ---
 
-    private class FakeHandler : HttpMessageHandler
+    private sealed class FakeHandler(Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> handler) : HttpMessageHandler
     {
-        private readonly Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> _handler;
+        private readonly Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> _handler = handler;
         public HttpRequestMessage? LastRequest { get; private set; }
-
-        public FakeHandler(Func<HttpRequestMessage, CancellationToken, HttpResponseMessage> handler)
-            => _handler = handler;
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
         {

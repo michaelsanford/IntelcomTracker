@@ -1,3 +1,4 @@
+using System.Globalization;
 using IntelcomTracker.Models;
 using Spectre.Console;
 using Spectre.Console.Rendering;
@@ -6,9 +7,16 @@ namespace IntelcomTracker.Ui;
 
 public static class DashboardView
 {
-    public static IRenderable Build(TrackingStore store, int selectedIndex,
-        DateTime nextAutoRefresh, DateTime manualAvailableAt)
+    public static IRenderable Build(
+        TrackingStore store,
+        int selectedIndex,
+        DateTime nextAutoRefresh,
+        DateTime manualAvailableAt,
+        TimeProvider? timeProvider = null)
     {
+        var provider = timeProvider ?? TimeProvider.System;
+        var nowUtc = provider.GetUtcNow().UtcDateTime;
+
         var table = new Table()
             .RoundedBorder()
             .BorderColor(Color.Grey)
@@ -73,7 +81,7 @@ public static class DashboardView
             }
 
             var updatedMarkup = new Markup(pkg.LastRefreshed.HasValue
-                ? $"[grey]{FormatRelative(pkg.LastRefreshed.Value)}[/]"
+                ? $"[grey]{FormatRelative(pkg.LastRefreshed.Value, nowUtc)}[/]"
                 : "[grey dim]Never[/]");
 
             table.AddRow(
@@ -81,12 +89,12 @@ public static class DashboardView
                 idMarkup, nickMarkup, statusMarkup, locationMarkup, etaMarkup, updatedMarkup);
         }
 
-        var autoRemaining = nextAutoRefresh - DateTime.UtcNow;
+        var autoRemaining = nextAutoRefresh - nowUtc;
         var autoStr = autoRemaining > TimeSpan.Zero
             ? $"   [grey]auto-refresh in {FormatDuration(autoRemaining)}[/]"
             : "";
 
-        var manualCooldown = manualAvailableAt - DateTime.UtcNow;
+        var manualCooldown = manualAvailableAt - nowUtc;
         var rKey = manualCooldown > TimeSpan.Zero
             ? $"[grey dim][[R]][/] Refresh [grey](in {FormatDuration(manualCooldown)})[/]"
             : "[grey dim][[R]][/] Refresh";
@@ -105,16 +113,16 @@ public static class DashboardView
 
         static string T(string? iso) =>
             DateTimeOffset.TryParse(iso, out var dt)
-                ? dt.ToLocalTime().ToString("h:mm tt")
+                ? dt.ToLocalTime().ToString("h:mm tt", CultureInfo.CurrentCulture)
                 : "?";
 
         if (eta.From is null && eta.To is null) return new Markup("[grey dim]—[/]");
         return new Markup($"[bold]{T(eta.From)}[/][grey] – [/][bold]{T(eta.To)}[/]");
     }
 
-    private static string FormatRelative(DateTime utc)
+    private static string FormatRelative(DateTime utc, DateTime nowUtc)
     {
-        var e = DateTime.UtcNow - utc;
+        var e = nowUtc - utc;
         if (e.TotalSeconds < 60) return $"{(int)e.TotalSeconds}s ago";
         if (e.TotalMinutes < 60) return $"{(int)e.TotalMinutes}m ago";
         return $"{(int)e.TotalHours}h ago";

@@ -15,9 +15,6 @@ public interface ITrackingStoreService
 
 public class TrackingStoreService : ITrackingStoreService
 {
-    private static readonly JsonSerializerOptions _writeOptions = new() { WriteIndented = true };
-    private static readonly JsonSerializerOptions _readOptions = new() { PropertyNameCaseInsensitive = true };
-
     private static readonly string AppDataDir = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "IntelcomTracker");
@@ -61,7 +58,7 @@ public class TrackingStoreService : ITrackingStoreService
         try
         {
             var json = File.ReadAllText(StorePath);
-            return JsonSerializer.Deserialize<TrackingStore>(json, _readOptions) ?? new TrackingStore();
+            return JsonSerializer.Deserialize(json, IntelcomJsonContext.Default.TrackingStore) ?? new TrackingStore();
         }
         catch { return new TrackingStore(); }
     }
@@ -70,8 +67,12 @@ public class TrackingStoreService : ITrackingStoreService
     {
         try
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(StorePath)!);
-            File.WriteAllText(StorePath, JsonSerializer.Serialize(store, _writeOptions));
+            var dir = Path.GetDirectoryName(StorePath)!;
+            Directory.CreateDirectory(dir);
+            var tempPath = Path.Combine(dir, $"{Path.GetFileName(StorePath)}.{Guid.NewGuid():N}.tmp");
+            var json = JsonSerializer.Serialize(store, IntelcomJsonContext.Default.TrackingStore);
+            File.WriteAllText(tempPath, json);
+            File.Move(tempPath, StorePath, overwrite: true);
         }
         catch { }
     }

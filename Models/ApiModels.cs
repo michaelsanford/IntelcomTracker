@@ -2,104 +2,104 @@ using System.Text.Json.Serialization;
 
 namespace IntelcomTracker.Models;
 
-public class ApiResponseWrapper
+public sealed record ApiResponseWrapper
 {
     [JsonPropertyName("success")]
-    public bool Success { get; set; }
+    public bool Success { get; init; }
 
     [JsonPropertyName("data")]
-    public ApiResponseData? Data { get; set; }
+    public ApiResponseData? Data { get; init; }
 }
 
-public class ApiResponseData
+public sealed record ApiResponseData
 {
     [JsonPropertyName("code")]
-    public string? Code { get; set; }
+    public string? Code { get; init; }
 
     [JsonPropertyName("result")]
-    public TrackingResult? Result { get; set; }
+    public TrackingResult? Result { get; init; }
 }
 
-public class TrackingResult
+public sealed record TrackingResult
 {
     [JsonPropertyName("tracking_id")]
-    public string TrackingId { get; set; } = "";
+    public string TrackingId { get; init; } = "";
 
     [JsonPropertyName("eta")]
-    public string? Eta { get; set; }
+    public string? Eta { get; init; }
 
     [JsonPropertyName("public_eta")]
-    public PublicEta? PublicEta { get; set; }
+    public PublicEta? PublicEta { get; init; }
 
     [JsonPropertyName("driver_name")]
-    public string? DriverName { get; set; }
+    public string? DriverName { get; init; }
 
     [JsonPropertyName("last_status")]
-    public StatusEvent? LastStatus { get; set; }
+    public StatusEvent? LastStatus { get; init; }
 
     [JsonPropertyName("status_list")]
-    public List<StatusEvent> StatusList { get; set; } = [];
+    public List<StatusEvent> StatusList { get; init; } = [];
 }
 
-public class PublicEta
+public sealed record PublicEta
 {
     [JsonPropertyName("from")]
-    public string? From { get; set; }
+    public string? From { get; init; }
 
     [JsonPropertyName("to")]
-    public string? To { get; set; }
+    public string? To { get; init; }
 }
 
-public class StatusEvent
+public sealed record StatusEvent
 {
     [JsonPropertyName("timestamp")]
-    public long Timestamp { get; set; }
+    public long Timestamp { get; init; }
 
     [JsonPropertyName("statusCode")]
-    public int StatusCode { get; set; }
+    public int StatusCode { get; init; }
 
     [JsonPropertyName("label")]
-    public string? Label { get; set; }
+    public string? Label { get; init; }
 
     [JsonPropertyName("labels")]
-    public StatusLabels? Labels { get; set; }
+    public StatusLabels? Labels { get; init; }
 
     [JsonPropertyName("package_location")]
-    public PackageLocation? PackageLocation { get; set; }
+    public PackageLocation? PackageLocation { get; init; }
 
     [JsonPropertyName("isDelivered")]
-    public bool IsDelivered { get; set; }
+    public bool IsDelivered { get; init; }
 }
 
-public class StatusLabels
+public sealed record StatusLabels
 {
     [JsonPropertyName("en")]
-    public LocalizedLabel? En { get; set; }
+    public LocalizedLabel? En { get; init; }
 }
 
-public class LocalizedLabel
+public sealed record LocalizedLabel
 {
     [JsonPropertyName("shortLabel")]
-    public string? ShortLabel { get; set; }
+    public string? ShortLabel { get; init; }
 
     [JsonPropertyName("longLabel")]
-    public string? LongLabel { get; set; }
+    public string? LongLabel { get; init; }
 }
 
-public class PackageLocation
+public sealed record PackageLocation
 {
     [JsonPropertyName("address")]
-    public LocationAddress? Address { get; set; }
+    public LocationAddress? Address { get; init; }
 }
 
-public class LocationAddress
+public sealed record LocationAddress
 {
     [JsonPropertyName("city")]
-    public string? City { get; set; }
+    public string? City { get; init; }
 
     [JsonPropertyName("state_province")]
-    public string? StateProvince { get; set; }
+    public string? StateProvince { get; init; }
 
     [JsonPropertyName("timezone")]
-    public string? Timezone { get; set; }
+    public string? Timezone { get; init; }
 }
