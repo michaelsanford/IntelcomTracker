@@ -86,14 +86,14 @@ jobs:
 
       - name: Upload Open Source results
         if: ${{ !cancelled() && hashFiles('snyk-sca.sarif') != '' }}
-        uses: github/codeql-action/upload-sarif@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4
+        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd # v4
         with:
           sarif_file: snyk-sca.sarif
           category: snyk-open-source
 
       - name: Upload Code results
         if: ${{ !cancelled() && hashFiles('snyk-code.sarif') != '' }}
-        uses: github/codeql-action/upload-sarif@b96794f015dfd88f77b49b1c93e0fa7110f94c63 # v4
+        uses: github/codeql-action/upload-sarif@1c5b675653bb5c22dbe9b12b556ec555138e09fd # v4
         with:
           sarif_file: snyk-code.sarif
           category: snyk-code
